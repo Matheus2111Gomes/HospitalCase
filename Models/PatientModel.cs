@@ -7,6 +7,7 @@
         public string? PatiendAddress { get; set; }
         public string? PatientTelephone{ get; set; }
         public string? PatientDocument { get; set; }
+        public DateTime? PatientDateBirth{ get; set; }
 
     }
 }
