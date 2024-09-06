@@ -1,6 +1,7 @@
 CREATE DATABASE HOSPITAL_CASE;
+GO 
 USE HOSPITAL_CASE;
-
+GO 
 CREATE TABLE Patients(
 	Id UNIQUEIDENTIFIER PRIMARY KEY,
 	Name varchar(255),
@@ -9,6 +10,7 @@ CREATE TABLE Patients(
 	Document varchar(255),
 	DateBirth Date,
 )
+GO 
 INSERT INTO Patients(
 	Id,
 	Name,
@@ -25,18 +27,21 @@ VALUES(
 	'123123123',
 	'11/11/1996'
 );
+GO 
 --Select * from Patients;
 
 CREATE TABLE Specialtys(
 	Id int Identity PRIMARY KEY,
 	Name varchar(255)
 );
+GO 
 INSERT INTO Specialtys(
 	Name
 )
 VALUES(
 	'cardiologist'
 );
+GO 
 --SELECT * FROM Specialtys
 
 CREATE TABLE Doctors (
@@ -45,6 +50,7 @@ CREATE TABLE Doctors (
 	Name varchar(255),
 	SpecialtyId int FOREIGN KEY (SpecialtyId) REFERENCES Specialtys(Id),
 );
+GO 
 INSERT INTO Doctors(
 	Id,
 	CRM,
@@ -58,7 +64,7 @@ VALUES(
 	1
 );
 SELECT * FROM Doctors;
-
+GO 
 CREATE TABLE Appointments(
 	Id UNIQUEIDENTIFIER PRIMARY KEY,
 	AppointmentDate Date,
@@ -66,6 +72,7 @@ CREATE TABLE Appointments(
 	DoctorId UNIQUEIDENTIFIER FOREIGN KEY (DoctorId) REFERENCES Doctors(Id),
 	AppointmentInfos NVARCHAR(MAX)
 )
+GO 
 --SELECT * FROM Appointments;
 
 --LogsPatient
@@ -82,6 +89,7 @@ CREATE TABLE PatientAudit (
     NewTelephone VARCHAR(255)
 );
 
+GO 
 --Tabelas de junção
 CREATE TABLE DoctorPatient (
     DoctorId UNIQUEIDENTIFIER NOT NULL,
@@ -93,7 +101,7 @@ CREATE TABLE DoctorPatient (
 
 
 --select * from PatientAudit
-
+GO 
 
 CREATE TABLE Users (
     Id UNIQUEIDENTIFIER PRIMARY KEY,
@@ -103,6 +111,8 @@ CREATE TABLE Users (
     ForeignId UNIQUEIDENTIFIER -- Referencia - PatientId/DoctorId
 );
 
+
+GO 
 --Trigger Para Loggar alterações em paciente
 CREATE TRIGGER trg_AuditPatientUpdate
 ON Patients
@@ -114,7 +124,7 @@ BEGIN
     FROM inserted i
     JOIN deleted d ON i.Id = d.Id;
 END;
-
+GO 
 
 --Trigger para checkagem de disponibilidade de consulta
 CREATE TRIGGER trg_CheckAppointmentConflict

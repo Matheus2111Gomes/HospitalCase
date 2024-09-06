@@ -2,7 +2,42 @@
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <h2 class="text-center">Login</h2>
+            <p class="text-center">Use your CRM (for doctors) or document (for patients) to log in</p>
+
+            <form method="post" action="/Account/Login">
+                <div class="form-group">
+                    <label for="username">CRM or Document</label>
+                    <input type="text" class="form-control" id="username" placeholder="Enter your CRM or Document" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" class="form-control" id="password" placeholder="Enter your password" required>
+                </div>
+                <button type="submit" class="btn btn-primary btn-block mt-3">Login</button>
+            </form>
+
+        </div>
+    </div>
 </div>
+
+<style>
+    body {
+        background-color: #f8f9fa;
+    }
+
+    .container {
+        margin-top: 100px;
+    }
+
+    .form-control {
+        border-radius: 0.25rem;
+    }
+
+    .btn {
+        border-radius: 0.25rem;
+    }
+</style>

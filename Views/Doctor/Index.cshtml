@@ -14,6 +14,9 @@
     <thead>
         <tr>
             <th>
+                @Html.DisplayNameFor(model => model.DoctorId)
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.DoctorCRM)
             </th>
             <th>
@@ -29,6 +32,9 @@
         @foreach (var item in Model)
         {
                 <tr>
+                    <td>
+                    @Html.DisplayFor(modelItem => item.DoctorId)
+                    </td>
                     <td>
                     @Html.DisplayFor(modelItem => item.DoctorCRM)
                     </td>
