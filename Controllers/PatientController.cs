@@ -54,7 +54,7 @@ public class PatientController : Controller
 
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public IActionResult Edit(int id, PatientModel patient)
+    public IActionResult Edit(Guid id, PatientModel patient)
     {
         if (id != patient.PatientId)
         {

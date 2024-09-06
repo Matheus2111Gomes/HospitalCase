@@ -15,7 +15,7 @@ public class PatientRepository : IPatientRepository
     {
         using (var connection = new SqlConnection(_connectionString))
         {
-            using (var command = new SqlCommand("SELECT * FROM Patient WHERE Id = @PatientId", connection))
+            using (var command = new SqlCommand("SELECT * FROM Patients WHERE Id = @PatientId", connection))
             {
                 command.Parameters.AddWithValue("@PatientId", id);
                 connection.Open();
@@ -25,7 +25,7 @@ public class PatientRepository : IPatientRepository
                     {
                         return new PatientModel
                         {
-                            PatientId = (int)reader["PatientId"],
+                            PatientId = (Guid)reader["PatientId"],
                             PatientName = (string)reader["PatientName"],
                             PatientDateBirth = (DateTime)reader["PatientDateBirth"]
                         };
@@ -41,7 +41,7 @@ public class PatientRepository : IPatientRepository
         var patients = new List<PatientModel>();
         using (var connection = new SqlConnection(_connectionString))
         {
-            using (var command = new SqlCommand("SELECT * FROM Patient", connection))
+            using (var command = new SqlCommand("SELECT * FROM Patients", connection))
             {
                 connection.Open();
                 using (var reader = command.ExecuteReader())
@@ -50,7 +50,7 @@ public class PatientRepository : IPatientRepository
                     {
                         patients.Add(new PatientModel
                         {
-                            PatientId = (int)reader["Id"],
+                            PatientId = (Guid)reader["Id"],
                             PatientName = (string)reader["Name"],
                             PatientDateBirth = (DateTime)reader["DateBirth"]
                         });
@@ -63,11 +63,17 @@ public class PatientRepository : IPatientRepository
 
     public void Add(PatientModel patient)
     {
+        Guid patientID = Guid.NewGuid();
+
         using (var connection = new SqlConnection(_connectionString))
         {
-            using (var command = new SqlCommand("INSERT INTO Patient (Name, DatefBirth) VALUES (@PatientName, @PatientDateBirth)", connection))
+            using (var command = new SqlCommand("INSERT INTO Patients (Id, Name,Address,Telephone,Document,DateBirth) VALUES (@PatientId,@PatientName, @PatientAddress,@PatientTelephone,@PatientDocument, @PatientDateBirth)", connection))
             {
+                command.Parameters.AddWithValue("@PatientId", patientID);
                 command.Parameters.AddWithValue("@PatientName", patient.PatientName);
+                command.Parameters.AddWithValue("@PatientAddress", patient.PatientAddress);
+                command.Parameters.AddWithValue("@PatientTelephone", patient.PatientTelephone);
+                command.Parameters.AddWithValue("@PatientDocument", patient.PatientDocument);
                 command.Parameters.AddWithValue("@PatientDateBirth", patient.PatientDateBirth);
                 connection.Open();
                 command.ExecuteNonQuery();
@@ -79,7 +85,7 @@ public class PatientRepository : IPatientRepository
     {
         using (var connection = new SqlConnection(_connectionString))
         {
-            using (var command = new SqlCommand("UPDATE Patient SET Name = @PatientName, DateBirth = @PatientDateBirth WHERE Id = @PatientId", connection))
+            using (var command = new SqlCommand("UPDATE Patients SET Name = @PatientName, DateBirth = @PatientDateBirth WHERE Id = @PatientId", connection))
             {
                 command.Parameters.AddWithValue("@PatientName", patient.PatientName);
                 command.Parameters.AddWithValue("@PatientDateBirth", patient.PatientDateBirth);
@@ -94,7 +100,7 @@ public class PatientRepository : IPatientRepository
     {
         using (var connection = new SqlConnection(_connectionString))
         {
-            using (var command = new SqlCommand("DELETE FROM Patient WHERE Id = @PatientId", connection))
+            using (var command = new SqlCommand("DELETE FROM Patients WHERE Id = @PatientId", connection))
             {
                 command.Parameters.AddWithValue("@PatientId", id);
                 connection.Open();
