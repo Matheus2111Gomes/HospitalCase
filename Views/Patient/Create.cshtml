@@ -1,0 +1,46 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+@model PatientModel
+
+<d iv class="text-center">
+    <form asp-action="Create" method="post">
+        <!-- Primeiro Nome -->
+        <div class="form-group">
+            <label asp-for="PatientName"></label>
+            <input asp-for="PatientName" class="form-control" placeholder="Name" />
+            <span asp-validation-for="PatientName" class="text-danger"></span>
+        </div>
+
+        <!-- Sobrenome -->
+        <div class="form-group">
+            <label asp-for="PatientAddress"></label>
+            <input asp-for="PatientAddress" class="form-control" placeholder="Address" />
+            <span asp-validation-for="PatientAddress" class="text-danger"></span>
+        </div>
+
+        <!-- Email -->
+        <div class="form-group">
+            <label asp-for="PatientTelephone"></label>
+            <input asp-for="PatientTelephone" class="form-control" placeholder="Telephone" />
+            <span asp-validation-for="PatientTelephone" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="PatientDocument"></label>
+            <input asp-for="PatientDocument" class="form-control" placeholder="Document" />
+            <span asp-validation-for="PatientDocument" class="text-danger"></span>
+        </div>
+
+        <!-- Data de Nascimento -->
+        <div class="form-group">
+            <label asp-for="PatientDateBirth"></label>
+            <input asp-for="PatientDateBirth" class="form-control" type="date" />
+            <span asp-validation-for="PatientDateBirth" class="text-danger"></span>
+        </div>
+
+        <!-- Botão Submit -->
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+    </div>
+
