@@ -76,3 +76,4 @@ D:\Games\HospitalCase\bin\Debug\net6.0\runtimes\win\lib\net6.0\System.Runtime.Ca
 D:\Games\HospitalCase\bin\Debug\net6.0\runtimes\win\lib\net6.0\System.Security.Cryptography.ProtectedData.dll
 D:\Games\HospitalCase\bin\Debug\net6.0\runtimes\win\lib\net6.0\System.Windows.Extensions.dll
 D:\Games\HospitalCase\obj\Debug\net6.0\HospitalCase.csproj.CopyComplete
+D:\Games\HospitalCase\bin\Debug\net6.0\BCrypt.Net-Next.dll
