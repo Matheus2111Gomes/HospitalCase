@@ -1,27 +1,39 @@
 ﻿@model HospitalCase.Models.AppointmentModel
 
+@{
+    ViewData["Title"] = "Create Appointment";
+}
+
 <h2>Create Appointment</h2>
 
-<form asp-action="Create">
+<!-- Exibir a mensagem de erro no topo, se existir -->
+@Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+<form asp-action="Create" method="post">
     <div class="form-group">
         <label asp-for="AppointmentDate" class="control-label"></label>
         <input asp-for="AppointmentDate" class="form-control" />
-        <span asp-validation-for="AppointmentDate" class="text-danger"></span>
+        @Html.ValidationMessageFor(model => model.AppointmentDate, "", new { @class = "text-danger" })
     </div>
+
     <div class="form-group">
         <label asp-for="PatientId" class="control-label"></label>
         <input asp-for="PatientId" class="form-control" />
-        <span asp-validation-for="PatientId" class="text-danger"></span>
+        @Html.ValidationMessageFor(model => model.PatientId, "", new { @class = "text-danger" })
     </div>
+
     <div class="form-group">
         <label asp-for="DoctorId" class="control-label"></label>
         <input asp-for="DoctorId" class="form-control" />
-        <span asp-validation-for="DoctorId" class="text-danger"></span>
+        @Html.ValidationMessageFor(model => model.DoctorId, "", new { @class = "text-danger" })
     </div>
+
     <div class="form-group">
         <label asp-for="AppointmentInfos" class="control-label"></label>
-        <input asp-for="AppointmentInfos" class="form-control" />
-        <span asp-validation-for="AppointmentInfos" class="text-danger"></span>
+        <textarea asp-for="AppointmentInfos" class="form-control"></textarea>
+        @Html.ValidationMessageFor(model => model.AppointmentInfos, "", new { @class = "text-danger" })
     </div>
+
     <button type="submit" class="btn btn-primary">Create</button>
+    <a asp-action="Index" class="btn btn-secondary">Cancel</a>
 </form>
