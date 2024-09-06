@@ -2,6 +2,7 @@
 using HospitalCase.Models;
 using System;
 using System.Threading.Tasks;
+using Microsoft.Data.SqlClient;
 
 public class AppointmentController : Controller
 {
@@ -37,11 +38,30 @@ public class AppointmentController : Controller
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> Create([Bind("AppointmentId,AppointmentDate,PatientId,DoctorId,AppointmentInfos")] AppointmentModel appointment)
     {
+
         if (ModelState.IsValid)
         {
             appointment.AppointmentId = Guid.NewGuid(); // Generate a new GUID for the new appointment
-            await _repository.AddAppointmentAsync(appointment);
-            return RedirectToAction(nameof(Index));
+
+            try
+            {
+                await _repository.AddAppointmentAsync(appointment);
+                return RedirectToAction(nameof(Index));
+            }
+            catch (SqlException ex)
+            {
+                {
+                    if (ex.Message.Contains("Doctor is already booked for this time"))
+                    {
+                        ModelState.AddModelError("", "This doctor is already booked for the selected time.");
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+            }
+       
         }
         return View(appointment);
     }
