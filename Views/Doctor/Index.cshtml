@@ -1,0 +1,55 @@
+﻿@model IEnumerable<HospitalCase.Models.DoctorModel>
+
+@{
+    ViewData["Title"] = "Doctors";
+}
+
+<h1>Doctors</h1>
+
+<p>
+    <a class="btn btn-primary" asp-action="Create">Create New</a>
+</p>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.DoctorId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DoctorCRM)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DoctorName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DoctorSpecialty)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+                <tr>
+                    <td>
+                    @Html.DisplayFor(modelItem => item.DoctorId)
+                    </td>
+                    <td>
+                    @Html.DisplayFor(modelItem => item.DoctorCRM)
+                    </td>
+                    <td>
+                    @Html.DisplayFor(modelItem => item.DoctorName)
+                    </td>
+                    <td>
+                    @Html.DisplayFor(modelItem => item.DoctorSpecialty)
+                    </td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.DoctorId" class="btn btn-warning">Edit</a>
+                        <a asp-action="Details" asp-route-id="@item.DoctorId" class="btn btn-info">Details</a>
+                        <a asp-action="Delete" asp-route-id="@item.DoctorId" class="btn btn-danger">Delete</a>
+                    </td>
+                </tr>
+        }
+    </tbody>
+</table>

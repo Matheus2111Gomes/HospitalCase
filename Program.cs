@@ -10,13 +10,25 @@ builder.Services.AddSingleton(builder.Configuration.GetConnectionString("Default
 
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 
-builder.Services.AddTransient<IPatientRepository>(provider => new PatientRepository(connectionString));
-builder.Services.AddTransient<PatientService>();
+//builder.Services.AddTransient<IPatientRepository>(provider => new PatientRepository(connectionString));
+//builder.Services.AddTransient<PatientService>();
+
+builder.Services.AddTransient<IPatientRepository, PatientRepository>(provider =>
+{
+    var connectionString = provider.GetRequiredService<string>();
+    return new PatientRepository(connectionString);
+});
 
 builder.Services.AddTransient<IAppointmentRepository, AppointmentRepository>(provider =>
 {
     var connectionString = provider.GetRequiredService<string>();
     return new AppointmentRepository(connectionString);
+});
+
+builder.Services.AddTransient<IDoctorRepository, DoctorRepository>(provider =>
+{
+    var connectionString = provider.GetRequiredService<string>();
+    return new DoctorRepository(connectionString);
 });
 
 
