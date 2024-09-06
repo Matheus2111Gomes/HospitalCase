@@ -1,23 +1,27 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using HospitalCase.Models; 
+using HospitalCase.Models;
+using System;
+using System.Threading.Tasks;
+using HospitalCase.Repositories.Patient;
+
 public class PatientController : Controller
 {
-    private readonly PatientService _patientService;
+    private readonly IPatientRepository _patientRepository;
 
-    public PatientController(PatientService patientService)
+    public PatientController(IPatientRepository patientRepository)
     {
-        _patientService = patientService;
+        _patientRepository = patientRepository;
     }
 
     public IActionResult Index()
     {
-        var patients = _patientService.GetAllPatients();
+        var patients = _patientRepository.GetAll();
         return View(patients);
     }
 
-    public IActionResult Details(int id)
+    public IActionResult Details(Guid id)
     {
-        var patient = _patientService.GetPatient;
+        var patient = _patientRepository.GetById(id);
         if (patient == null)
         {
             return NotFound();
@@ -32,19 +36,20 @@ public class PatientController : Controller
 
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public IActionResult Create(PatientModel patient)
+    public IActionResult Create([Bind("PatientId,PatientName,PatientAddress,PatientTelephone,PatientDocument,PatientDateBirth")] PatientModel patient)
     {
         if (ModelState.IsValid)
         {
-            _patientService.AddPatient(patient);
+            patient.PatientId = Guid.NewGuid();
+            _patientRepository.Add(patient);
             return RedirectToAction(nameof(Index));
         }
         return View(patient);
     }
 
-    public IActionResult Edit(int id)
+    public IActionResult Edit(Guid id)
     {
-        var patient = _patientService.GetPatient;
+        var patient = _patientRepository.GetById(id);
         if (patient == null)
         {
             return NotFound();
@@ -54,7 +59,7 @@ public class PatientController : Controller
 
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public IActionResult Edit(Guid id, PatientModel patient)
+    public IActionResult Edit(Guid id, [Bind("PatientId,PatientName,PatientAddress,PatientTelephone,PatientDocument,PatientDateBirth")] PatientModel patient)
     {
         if (id != patient.PatientId)
         {
@@ -63,15 +68,28 @@ public class PatientController : Controller
 
         if (ModelState.IsValid)
         {
-            _patientService.UpdatePatient(patient);
+            try
+            {
+                _patientRepository.Update(patient);
+            }
+            catch (Exception ex)
+            {
+                if (_patientRepository.GetById(id) == null)
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
             return RedirectToAction(nameof(Index));
         }
         return View(patient);
     }
-
-    public IActionResult Delete(int id)
+    public IActionResult Delete(Guid id)
     {
-        var patient = _patientService.GetPatient;
+        var patient = _patientRepository.GetById(id);
         if (patient == null)
         {
             return NotFound();
@@ -81,9 +99,17 @@ public class PatientController : Controller
 
     [HttpPost, ActionName("Delete")]
     [ValidateAntiForgeryToken]
-    public IActionResult DeleteConfirmed(int id)
+    public IActionResult DeleteConfirmed(Guid id)
     {
-        _patientService.DeletePatient(id);
-        return RedirectToAction(nameof(Index));
+        var patient = _patientRepository.GetById(id);
+        if (patient == null)
+        {
+            return NotFound();
+        }
+
+        _patientRepository.Delete(id);
+        return RedirectToAction(nameof(Index)); 
     }
+
+
 }

@@ -1,0 +1,41 @@
+﻿@model IEnumerable<HospitalCase.Models.PatientModel>
+
+@{
+    ViewData["Title"] = "Patients";
+}
+
+<h1>Patients</h1>
+
+<p>
+    <a asp-action="Create" class="btn btn-primary">Create New</a>
+</p>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Address</th>
+            <th>Telephone</th>
+            <th>Document</th>
+            <th>Date of Birth</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.PatientName</td>
+                <td>@item.PatientAddress</td>
+                <td>@item.PatientTelephone</td>
+                <td>@item.PatientDocument</td>
+                <td>@item.PatientDateBirth?.ToShortDateString()</td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.PatientId" class="btn btn-warning">Edit</a>
+                    <a asp-action="Details" asp-route-id="@item.PatientId" class="btn btn-info">Details</a>
+                    <a asp-action="Delete" asp-route-id="@item.PatientId" class="btn btn-danger">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
