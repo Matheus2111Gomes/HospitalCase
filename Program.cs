@@ -2,7 +2,8 @@ using HospitalCase.Repositories.Patient;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using HospitalCase.Repositories; 
+using HospitalCase.Repositories;
+using HospitalCase.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
@@ -31,7 +32,7 @@ builder.Services.AddTransient<IDoctorRepository, DoctorRepository>(provider =>
     return new DoctorRepository(connectionString);
 });
 
-
+builder.Services.AddScoped<IDoctorService, DoctorService>();
 
 
 var app = builder.Build();
