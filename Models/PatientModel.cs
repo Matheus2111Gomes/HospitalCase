@@ -8,6 +8,9 @@
         public string? PatientTelephone{ get; set; }
         public string? PatientDocument { get; set; }
         public DateTime? PatientDateBirth{ get; set; }
+        public ICollection<DoctorModel>? Doctors { get; set; }
+        public ICollection<AppointmentModel>? Appointments { get; set; }
+
 
     }
 }

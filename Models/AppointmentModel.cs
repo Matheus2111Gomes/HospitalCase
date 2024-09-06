@@ -7,6 +7,9 @@
         public Guid PatientId { get; set; }
         public Guid DoctorId { get; set; }
         public string? AppointmentInfos { get; set; }
-       
+
+        public DoctorModel? Doctor { get; set; }
+        public PatientModel? Patient { get; set; }
+
     }
 }

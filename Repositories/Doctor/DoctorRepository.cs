@@ -29,7 +29,7 @@ public class DoctorRepository : IDoctorRepository
                             DoctorId = reader.GetGuid(0),
                             DoctorCRM = reader.GetString(1),
                             DoctorName = reader.GetString(2),
-                            DoctorSpecialty = reader.GetString(3)
+                            DoctorSpecialty = reader.GetInt32(3)
                         });
                     }
                 }
@@ -59,7 +59,7 @@ public class DoctorRepository : IDoctorRepository
                             DoctorId = reader.GetGuid(0),
                             DoctorCRM = reader.GetString(1),
                             DoctorName = reader.GetString(2),
-                            DoctorSpecialty = reader.GetString(3)
+                            DoctorSpecialty = reader.GetInt32(3)
                         };
                     }
                 }
