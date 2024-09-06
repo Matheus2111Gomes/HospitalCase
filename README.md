@@ -1,17 +1,17 @@
 DONE:
 
-CRUD - Patient;
-CRUD - Doctor;
-CRUD - Appointment ;
-trigger validating whether consultation days are available;
-Trigger to save patient change logs;
+CRUD - Patient; <br>
+CRUD - Doctor;<br>
+CRUD - Appointment ;<br>
+trigger validating whether consultation days are available;<br>
+Trigger to save patient change logs;<br>
 
 WORK IN PROGRESS:
 
 AuthSystem:
-  Login will be done with the CRM for doctors and the document for patients and admins;
-  Doctors will only be able to see information about their profile (read only), their appointments, and the necessary information about their patients;
-  Patients will only see information about their appointments and their profile (read only);
+  Login will be done with the CRM for doctors and the document for patients and admins;<br>
+  Doctors will only be able to see information about their profile (read only), their appointments, and the necessary information about their patients;<br>
+  Patients will only see information about their appointments and their profile (read only);<br>
   Admins will have all access
 
 Add One more label:
