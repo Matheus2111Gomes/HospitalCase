@@ -1,0 +1,30 @@
+﻿@model HospitalCase.Models.DoctorModel
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create Doctor</h1>
+
+<h4>DoctorModel</h4>
+<hr />
+<form asp-action="Create">
+    <div class="form-group">
+        <label asp-for="DoctorCRM" class="control-label"></label>
+        <input asp-for="DoctorCRM" class="form-control" />
+        <span asp-validation-for="DoctorCRM" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="DoctorName" class="control-label"></label>
+        <input asp-for="DoctorName" class="form-control" />
+        <span asp-validation-for="DoctorName" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="DoctorSpecialty" class="control-label"></label>
+        <input asp-for="DoctorSpecialty" class="form-control" />
+        <span asp-validation-for="DoctorSpecialty" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <input type="submit" value="Create" class="btn btn-primary" />
+    </div>
+</form>
