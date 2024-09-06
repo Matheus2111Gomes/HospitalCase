@@ -1,0 +1,46 @@
+﻿@model HospitalCase.Models.PatientModel
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>PatientModel</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            Name
+        </dt>
+        <dd class="col-sm-10">
+            @Model.PatientName
+        </dd>
+        <dt class="col-sm-2">
+            Address
+        </dt>
+        <dd class="col-sm-10">
+            @Model.PatientAddress
+        </dd>
+        <dt class="col-sm-2">
+            Telephone
+        </dt>
+        <dd class="col-sm-10">
+            @Model.PatientTelephone
+        </dd>
+        <dt class="col-sm-2">
+            Document
+        </dt>
+        <dd class="col-sm-10">
+            @Model.PatientDocument
+        </dd>
+        <dt class="col-sm-2">
+            Date of Birth
+        </dt>
+        <dd class="col-sm-10">
+            @Model.PatientDateBirth?.ToShortDateString()
+        </dd>
+    </dl>
+    <a asp-action="Edit" asp-route-id="@Model.PatientId" class="btn btn-warning">Edit</a>
+    <a asp-action="Index" class="btn btn-primary">Back to List</a>
+</div>
