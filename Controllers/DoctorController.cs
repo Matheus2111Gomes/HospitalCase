@@ -1,28 +1,27 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using HospitalCase.Models;
+using HospitalCase.Services;
 using System;
 using System.Threading.Tasks;
 
 public class DoctorController : Controller
 {
-    private readonly IDoctorRepository _doctorRepository;
+    private readonly IDoctorService _doctorService;
 
-    public DoctorController(IDoctorRepository doctorRepository)
+    public DoctorController(IDoctorService doctorService)
     {
-        _doctorRepository = doctorRepository;
+        _doctorService = doctorService;
     }
 
-    // GET: Doctor
     public async Task<IActionResult> Index()
     {
-        var doctors = await _doctorRepository.GetAllDoctorsAsync();
+        var doctors = await _doctorService.GetAllDoctorsAsync();
         return View(doctors);
     }
 
-    // GET: Doctor/Details/5
     public async Task<IActionResult> Details(Guid id)
     {
-        var doctor = await _doctorRepository.GetDoctorByIdAsync(id);
+        var doctor = await _doctorService.GetDoctorByIdAsync(id);
         if (doctor == null)
         {
             return NotFound();
@@ -30,30 +29,26 @@ public class DoctorController : Controller
         return View(doctor);
     }
 
-    // GET: Doctor/Create
     public IActionResult Create()
     {
         return View();
     }
 
-    // POST: Doctor/Create
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Create([Bind("DoctorId,DoctorCRM,DoctorName,DoctorSpecialty")] DoctorModel doctor)
+    public async Task<IActionResult> Create([Bind("DoctorCRM,DoctorName,DoctorSpecialty")] DoctorModel doctor)
     {
         if (ModelState.IsValid)
         {
-            doctor.DoctorId = Guid.NewGuid(); // Gerar um novo GUID para o novo médico
-            await _doctorRepository.AddDoctorAsync(doctor);
+            await _doctorService.AddDoctorAsync(doctor);
             return RedirectToAction(nameof(Index));
         }
         return View(doctor);
     }
 
-    // GET: Doctor/Edit/5
     public async Task<IActionResult> Edit(Guid id)
     {
-        var doctor = await _doctorRepository.GetDoctorByIdAsync(id);
+        var doctor = await _doctorService.GetDoctorByIdAsync(id);
         if (doctor == null)
         {
             return NotFound();
@@ -61,7 +56,6 @@ public class DoctorController : Controller
         return View(doctor);
     }
 
-    // POST: Doctor/Edit/5
     [HttpPost]
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> Edit(Guid id, [Bind("DoctorId,DoctorCRM,DoctorName,DoctorSpecialty")] DoctorModel doctor)
@@ -75,29 +69,19 @@ public class DoctorController : Controller
         {
             try
             {
-                await _doctorRepository.UpdateDoctorAsync(doctor);
+                await _doctorService.UpdateDoctorAsync(doctor);
             }
-            catch (Exception ex) // Ajuste para capturar exceções específicas de ADO.NET
+            catch (KeyNotFoundException)
             {
-                if (await _doctorRepository.GetDoctorByIdAsync(id) == null)
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    // Você pode adicionar um log aqui para capturar o erro específico
-                    throw;
-                }
+                return NotFound();
             }
             return RedirectToAction(nameof(Index));
         }
         return View(doctor);
     }
-
-    // GET: Doctor/Delete/5
     public async Task<IActionResult> Delete(Guid id)
     {
-        var doctor = await _doctorRepository.GetDoctorByIdAsync(id);
+        var doctor = await _doctorService.GetDoctorByIdAsync(id);
         if (doctor == null)
         {
             return NotFound();
@@ -105,12 +89,18 @@ public class DoctorController : Controller
         return View(doctor);
     }
 
-    // POST: Doctor/Delete/5
     [HttpPost, ActionName("Delete")]
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> DeleteConfirmed(Guid id)
     {
-        await _doctorRepository.DeleteDoctorAsync(id);
-        return RedirectToAction(nameof(Index));
+        try
+        {
+            await _doctorService.DeleteDoctorAsync(id);
+            return RedirectToAction(nameof(Index));
+        }
+        catch (KeyNotFoundException)
+        {
+            return NotFound();
+        }
     }
 }
