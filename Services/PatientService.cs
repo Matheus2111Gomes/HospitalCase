@@ -10,7 +10,7 @@ public class PatientService
         _patientRepository = patientRepository;
     }
 
-    public PatientModel GetPatient(int id)
+    public PatientModel GetPatient(Guid id)
     {
         return _patientRepository.GetById(id);
     }
@@ -30,7 +30,7 @@ public class PatientService
         _patientRepository.Update(patient);
     }
 
-    public void DeletePatient(int id)
+    public void DeletePatient(Guid id)
     {
         _patientRepository.Delete(id);
     }
